@@ -38,3 +38,4 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	}
 
 }
+/* Aula 6.3 */
