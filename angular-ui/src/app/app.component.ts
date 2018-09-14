@@ -9,13 +9,9 @@ export class AppComponent {
   nome = "Daverson";
 
   adicionar(nome: string) {
-    this.nome = nome;
+
+    const numero = Math.round(Math.random() * 100);
+
+    this.nome = `João ${numero}`;
   } 
-
-  alteraNome (event: any){
-      this.nome = event.target.value;
-   }
-
-
-
 }
