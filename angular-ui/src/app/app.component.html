@@ -1,3 +1,14 @@
-<!-- interpolação de dados {{ nome }} busca valores ou chama métodos de componentes -->
-<h1>Meu nome é {{ nome }} </h1>
-<h2>e tenho {{ getIdade() }} anos</h2>
+<div class="container">
+
+    <div class="alert alert-success" role="alert">
+       Funcionário criado: <strong>{{ nome }}</strong>
+    </div>
+
+    <div class="form-group">
+        <label >Nome</label>
+        <input type="text" class="form-control" (input)="alterarNome($event)" value="{{ nome }}">
+    </div>
+
+    <button type="button" class="btn btn-primary" (click)="adicionar()">Adicionar</button>
+
+</div>
