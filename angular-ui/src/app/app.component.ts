@@ -6,12 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  nome = '';
+  nome = "Daverson";
 
   adicionar(nome: string) {
     this.nome = nome;
-  }
+  } 
 
-  
+  alteraNome (event: any){
+      this.nome = event.target.value;
+   }
+
+
 
 }
