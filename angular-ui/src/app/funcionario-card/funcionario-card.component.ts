@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-funcionario-card',
   templateUrl: './funcionario-card.component.html',
-  //styleUrls: ['./funcionario-card.component.css']
+  // styleUrls: ['./funcionario-card.component.css']
   styles: [`
       .card-block {
         text-transform: uppercase;
@@ -21,11 +21,11 @@ export class FuncionarioCardComponent  {
   }
   */
 
-  isAdmin(){
+  isAdmin() {
     return this.funcionario.nome.startsWith('d');
   }
 
-  getEstilosCartao(){
+  getEstilosCartao() {
     return {
       'border-width.px' : this.funcionario.id,
       backgroundColor: this.funcionario.id % 2 === 0

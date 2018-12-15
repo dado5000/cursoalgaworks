@@ -8,22 +8,20 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 export class FuncionarioFormComponent {
 
   ultimoId = 0;
-  nome = "daverson";
+  nome = 'daverson';
   adicionado = false;
   @Output() funcionarioAdicionado = new EventEmitter();
-  
 
-  adicionar(nome: string) {    
-   
-      this.adicionado = true;   
-      
+  adicionar(nome: string) {
+          this.adicionado = true;
+
       const funcionario = {
         id: ++this.ultimoId,
         nome: this.nome
       };
 
       this.funcionarioAdicionado.emit(funcionario);
-   
-  } 
+
+  }
 
 }
