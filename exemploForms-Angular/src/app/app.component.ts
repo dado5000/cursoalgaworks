@@ -18,12 +18,15 @@ export class AppComponent {
   profissoes = ['Programador', 'Empresário', 'Outra'];
 
   salvar(form: NgForm) {
-    //this.cliente.nome = form.value.primeiroNome;
-    //this.cliente.email = form.value.emailAddress;
-    //this.cliente.profissao = form.value.profissao;
+    // this.cliente.nome = form.value.primeiroNome;
+    // this.cliente.email = form.value.emailAddress;
+    // this.cliente.profissao = form.value.profissao;
 
-    console.log(form.value);
-    console.log(this.cliente);
+    console.log(form);
+    // console.log(this.cliente);
+
+    // reset no form para limpar os capos e atribuindo o valor default no profissao
+    form.reset({ profissao: '' });
   }
 
 }
