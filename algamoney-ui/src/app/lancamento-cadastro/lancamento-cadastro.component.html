@@ -1,5 +1,5 @@
 <div class="container">
-  <form>
+  <form #lancamentoform="ngForm">
 
     <div class="ui-g">
       <div class="ui-g-12">
@@ -12,51 +12,57 @@
 
       <div class="ui-g-6 ui-md-3 ui-fluid">
         <label>Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yy"
-          [inline]="false" [readonlyInput]="true" [showIcon]="true"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" name="calendar_vencimento" ngModel #calendar_vencimento="ngModel"
+          required [inline]="false" [readonlyInput]="false" [showIcon]="true"></p-calendar>
+          <app-message [control]="calendar_vencimento" error="required"
+            text="Informa a data de vencimento" ></app-message>
       </div>
       <div class="ui-g-6 ui-md-3 ui-fluid">
         <label>{{ tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento'}}</label>
         <p-calendar dateFormat="dd/mm/yy"
           [inline]="false" [readonlyInput]="true" [showIcon]="true"></p-calendar>
       </div>
+
       <div class="ui-g-12 ui-md-9 ui-fluid">
         <label>Descrição {{ input_descricao.errors | json }}</label>
         <input pInputText type="text" name="input_descricao"
             ngModel #input_descricao="ngModel" required minlength="5">
 
-          <div *ngIf="input_descricao.hasError('required') && input_descricao.dirty"
-            class="ui-message ui-messages-error">
-            Informe uma descrição
-          </div>
-          <div *ngIf="input_descricao.hasError('minlength') && input_descricao.dirty"
-            class="ui-message ui-messages-error">
-            Mínimo de {{ input_descricao.errors.minlength.requiredLength }} caracteres
-          </div>
+          <app-message [control]="input_descricao" error="required"
+            text="Informe uma descrição"></app-message>
 
+          <app-message [control]="input_descricao" error="minlength"
+            text="Mínimo de {{ input_descricao.errors?.minlength?.requiredLength }} caracteres"></app-message>
       </div>
+
       <div class="ui-g-12 ui-md-3 ui-fluid">
         <label>Valor</label>
-        <input pInputText type="text" placeholder="0,00" name="input_valor"
+        <input pInputText type="text" placeholder="0,00" name="input_valor" required #input_valor="ngModel"
             currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }"
             ngModel>
+            <app-message [control]="input_valor" error="required"
+            text="Informe um valor"></app-message>
       </div>
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Categoria</label>
-        <p-dropdown [options]="categorias" [filter]="true" [autoWidth]="false"
+        <p-dropdown [options]="categorias" [filter]="true" [autoWidth]="false" required name="drop_categoria"
+              #drop_categoria="ngModel" ngModel
               placeholder="Selecione..."></p-dropdown>
       </div>
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Pessoa</label>
-        <p-dropdown [options]="pessoas" [filter]="true" [autoWidth]="false"
+        <p-dropdown [options]="pessoas" [filter]="true" [autoWidth]="false" required name="drop_pessoa"
+              #drop_pessoa="ngModel" ngModel
               placeholder="Selecione..."></p-dropdown>
       </div>
       <div class="ui-g-12 ui-fluid">
         <label>Observação</label>
         <textarea pInputTextarea rows="3"></textarea>
       </div>
+
       <div class="ui-g-12">
-        <button pButton type="submit" label="Salvar"></button>
+        <button pButton type="submit" label="Salvar" class="btn btn-primary"
+          [disabled]="!lancamentoform.valid"></button>
         <button pButton type="button" label="Novo" class="ui-button-info"></button>
         <a href="javascript:;">Voltar para a pesquisa</a>
       </div>
