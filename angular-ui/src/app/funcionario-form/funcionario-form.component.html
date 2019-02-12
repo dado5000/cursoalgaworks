@@ -4,7 +4,7 @@
     </div>
     -->
     <!-- Diretiva de atributo, faz a mesma coisa de forma diferente -->
-    <div class="alert alert-success" role="alert" [hidden]="!adicionado">
+    <!--<div class="alert alert-success" role="alert" [hidden]="!adicionado">
       Funcionário criado: <strong>{{ nome }}</strong>
    </div>
 
@@ -19,4 +19,13 @@
       (click)="adicionar(nome.value)" [disabled] = "nome.length == 0">Adicionar</button>
 
 <button class="btn btn-info" (click)="campo.colorir()">Colorir</button>
-<button class="btn btn-info" (click)="campo.descolorir()">Descolorir</button>
+<button class="btn btn-info" (click)="campo.descolorir()">Descolorir</button>-->
+
+<div class="form-group">
+  <label>Nome</label>
+  <input type="text" class="form-control" #nome>
+</div>
+
+<button type="button" class="btn btn-primary"
+  (click)="adicionar(nome.value); nome.value = ''"
+  [disabled]="nome.length == 0">Adicionar</button>
