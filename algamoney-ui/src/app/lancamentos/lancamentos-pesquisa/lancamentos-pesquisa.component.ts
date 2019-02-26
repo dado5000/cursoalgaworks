@@ -9,9 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LancamentosPesquisaComponent  implements OnInit {
 
-  descricao: string;
-  dataVencimentoInicio: Date;
-  dataVencimentoFim: Date;
+  filtro = new LancamentoFiltro();
   lancamentos = [];
   pt: any;
 
@@ -35,14 +33,10 @@ export class LancamentosPesquisaComponent  implements OnInit {
   }
 
   pesquisar() {
-    const filtro: LancamentoFiltro = {
-      descricao: this.descricao,
-      dataVencimentoInicio: this.dataVencimentoInicio,
-      dataVencimentoFim: this.dataVencimentoFim
-    };
-
-    this.lancamentoService.pesquisar( filtro )
-      .then( lancamentos => this.lancamentos = lancamentos );
+    this.lancamentoService.pesquisar( this.filtro )
+      .then( resultado => {
+        this.lancamentos = resultado.lancamentos;
+      } );
   }
 
 }
