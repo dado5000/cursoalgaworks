@@ -7,8 +7,10 @@ import { AppComponent } from './app.component';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentoService } from './lancamentos/lancamento.service';
-
 import { CoreModule } from './core/core.module';
+import { PessoaService } from './pessoas/pessoa.service';
+
+import { ToastyModule } from 'ng2-toasty';
 
 
 
@@ -21,11 +23,16 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     HttpModule,
 
+    ToastyModule.forRoot(),
+
     LancamentosModule,
     PessoasModule,
     CoreModule
   ],
-  providers: [LancamentoService],
+  providers: [
+    LancamentoService,
+    PessoaService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
