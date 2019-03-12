@@ -1,7 +1,17 @@
 <app-navbar></app-navbar>
 <app-lancamentos-pesquisa></app-lancamentos-pesquisa>
 
+<!-- Componente de mensagem toasty angular -->
 <ng2-toasty></ng2-toasty>
+<!-- Componente de confirmação de ação do PrimeNG -->
+<p-confirmDialog header="Confirmação" icon="fa fa-question-circle" #confirmacao>
+  <p-footer>
+    <button type="button" pButton icon="fa-check" label="Sim"
+      (click)="confirmacao.accept()"></button>
+    <button type="button" pButton icon="fa-times" label="Não"
+      (click)="confirmacao.reject()"></button>
+  </p-footer>
+</p-confirmDialog>
 
 <!--
     <app-lancamentos-pesquisa></app-lancamentos-pesquisa>
