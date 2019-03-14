@@ -1,6 +1,7 @@
+import { CategoriaService } from './../../categorias/categoria.service';
 import { PessoaService, PessoaFiltro } from './../pessoa.service';
 
-import { Component, OnInit  } from '@angular/core';
+import { Component  } from '@angular/core';
 
 import { LazyLoadEvent, ConfirmationService } from 'primeng/components/common/api';
 import { ErrorHandlerService } from 'app/core/error-handler.service';
@@ -11,7 +12,8 @@ import { ToastyService } from 'ng2-toasty';
   templateUrl: './pessoas-pesquisa.component.html',
   styleUrls: ['./pessoas-pesquisa.component.css']
 })
-export class PessoasPesquisaComponent {
+export class PessoasPesquisaComponent  {
+
 
   pessoas = [];
   totalRegistros = 0;
@@ -58,6 +60,31 @@ export class PessoasPesquisaComponent {
       this.toastyServiceMesagge.success('Pessoa excluida com sucesso!');
     })
     .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  statusPessoas(pessoa: any)  {
+
+    /* Minha solução ...
+      if (pessoa.ativo === true) {
+      pessoa.ativo = false;
+    }else {
+      pessoa.ativo = true;
+    } */
+    const novoStatus = !pessoa.ativo;
+    /* Minha solução ...
+      this.pessoaService.mudarStatus(pessoa.codigo, pessoa.ativo) */
+    this.pessoaService.mudarStatus(pessoa.codigo, novoStatus)
+      .then( () => {
+        /* Minha solução ...
+        if (pessoa.ativo === false) {
+          this.toastyServiceMesagge.success('Pessoa inativada com sucesso!');
+        }else {
+          this.toastyServiceMesagge.success('Pessoa ativada com sucesso!');
+        } */
+       const acao = novoStatus ? 'ativada' : 'desativada';
+       pessoa.ativo = novoStatus;
+       this.toastyServiceMesagge.success(`Pessoa ${acao} com sucesso!`);
+      } )
   }
 
 }

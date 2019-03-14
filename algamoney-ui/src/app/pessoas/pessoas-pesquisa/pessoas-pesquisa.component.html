@@ -32,7 +32,7 @@
                 <p-column field="ativo" header="Status" styleClass="col-data">
                   <ng-template let-situacao="rowData" pTemplate="body">
                     <a href="#" [pTooltip]=" situacao.ativo ? 'Desativar' : 'Ativar' "
-                      tooltipPosition="top">
+                      tooltipPosition="top" (click)="statusPessoas(situacao)">
                       {{ situacao.ativo ? 'Ativo' : 'Inativo'}}
                     </a>
                   </ng-template>

@@ -1,5 +1,5 @@
 <div class="container">
-  <form #lancamentoform="ngForm">
+  <form #lancamentoform="ngForm" autocomplete="off">
 
     <div class="ui-g">
       <div class="ui-g-12">
@@ -48,9 +48,8 @@
       </div>
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Categoria</label>
-        <p-dropdown [options]="categorias" [filter]="true" [autoWidth]="false" required name="drop_categoria"
-              #drop_categoria="ngModel" ngModel
-              placeholder="Selecione..."></p-dropdown>
+        <p-dropdown [options]="categorias" [filter]="true" [autoWidth]="false" required name="categoria"
+              ngModel placeholder="Selecione..."></p-dropdown>
       </div>
       <div class="ui-g-12 ui-md-6 ui-fluid">
         <label>Pessoa</label>
