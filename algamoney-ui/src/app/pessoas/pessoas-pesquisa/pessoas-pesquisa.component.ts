@@ -23,7 +23,7 @@ export class PessoasPesquisaComponent  {
       private pessoaService: PessoaService,
       private confirmation: ConfirmationService,
       private errorHandler: ErrorHandlerService,
-      private toastyServiceMesagge: ToastyService
+      private toastyServiceMessage: ToastyService
       ) {}
 
   pesquisar(pagina = 0) {
@@ -57,7 +57,7 @@ export class PessoasPesquisaComponent  {
       this.pesquisar(this.filtro.pagina);
 
       // Componente que fornece o recurso de mensagens ao usuário
-      this.toastyServiceMesagge.success('Pessoa excluida com sucesso!');
+      this.toastyServiceMessage.success('Pessoa excluida com sucesso!');
     })
     .catch(erro => this.errorHandler.handle(erro));
   }
@@ -83,7 +83,7 @@ export class PessoasPesquisaComponent  {
         } */
        const acao = novoStatus ? 'ativada' : 'desativada';
        pessoa.ativo = novoStatus;
-       this.toastyServiceMesagge.success(`Pessoa ${acao} com sucesso!`);
+       this.toastyServiceMessage.success(`Pessoa ${acao} com sucesso!`);
       } )
   }
 
