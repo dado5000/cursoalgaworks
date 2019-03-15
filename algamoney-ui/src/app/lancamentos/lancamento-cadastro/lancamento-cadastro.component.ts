@@ -1,8 +1,10 @@
-import { PessoaService } from 'app/pessoas/pessoa.service';
+import { FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { ErrorHandlerService } from 'app/core/error-handler.service';
+import { PessoaService } from 'app/pessoas/pessoa.service';
 import { CategoriaService } from './../../categorias/categoria.service';
+import { Lancamento } from './../../core/model';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -17,12 +19,8 @@ export class LancamentoCadastroComponent implements OnInit  {
   ];
 
   categorias = [];
-
-  pessoas = [
-    { label: 'João da Silva', value: 1 },
-    { label: 'Sebastião Souza', value: 2 },
-    { label: 'Maria Abadia', value: 3 }
-  ];
+  pessoas = [];
+  lancamento = new Lancamento();
 
   ngOnInit() {
     this.carregarCategorias();
@@ -34,6 +32,10 @@ export class LancamentoCadastroComponent implements OnInit  {
     private pessoaService: PessoaService,
     private errorHandler: ErrorHandlerService
   ) {}
+
+  salvar(form: FormControl) {
+    console.log(this.lancamento);
+  }
 
   carregarCategorias() {
     return this.categoriaService.listarTodas()
