@@ -10,11 +10,13 @@ import { ConfirmDialogModule } from 'primeng/components/confirmdialog/confirmdia
 import { LancamentoService } from 'app/lancamentos/lancamento.service';
 import { PessoaService } from 'app/pessoas/pessoa.service';
 import { ConfirmationService } from 'primeng/components/common/api';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   imports: [
     CommonModule,
+    RouterModule,
 
     ToastyModule.forRoot(),
     ConfirmDialogModule,

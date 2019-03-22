@@ -12,9 +12,9 @@
   <!-- [hidden] propriedade que exibe ou não o menu de acordo com o valor da varável booleana -->
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
     <li class="navbar-usuario">ADMINISTRADOR</li>
-    <li class="navbar-menuitem"><a href="#">Lançamentos</a></li>
-    <li class="navbar-menuitem"><a href="#">Pessoas</a></li>
-    <li class="navbar-menuitem"><a href="#">logout</a></li>
+    <li class="navbar-menuitem"><a routerLink="/lancamentos">Lançamentos</a></li>
+    <li class="navbar-menuitem"><a routerLink="/pessoas">Pessoas</a></li>
+    <li class="navbar-menuitem"><a routerLink="#">logout</a></li>
   </ul>
 
 </nav>
