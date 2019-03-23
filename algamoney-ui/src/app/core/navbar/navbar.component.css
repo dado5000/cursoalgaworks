@@ -34,6 +34,11 @@
 .navbar-menuitem {
   padding: 15px;
 }
+
+.navbar-menuitem.ativo {
+  background-color: #494541
+}
+
 /* estiliza apenas componente a de menuitem */
 .navbar-menuitem a {
   color: #c0bbb7;
