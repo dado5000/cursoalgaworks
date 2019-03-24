@@ -57,6 +57,24 @@ export class LancamentoCadastroComponent implements OnInit  {
   }
 
   salvar(form: FormControl) {
+    if (this.editando) {
+      this.atualizarLancamento(form);
+    } else {
+      this.adicionarLancamento(form);
+    }
+  }
+
+  atualizarLancamento(form: FormControl) {
+    this.lancamentoService.atualizar(this.lancamento)
+      .then(lancamento => {
+        this.lancamento = lancamento;
+
+        this.toastyServiceMessage.success('Lançamento Atualizado com sucesso!');
+      })
+      .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  adicionarLancamento(form: FormControl) {
     this.lancamentoService.adicionar(this.lancamento)
       .then(() => {
         this.toastyServiceMessage.success('Lançamento adicionado com sucesso!');
@@ -81,17 +99,6 @@ export class LancamentoCadastroComponent implements OnInit  {
         this.pessoas = pessoas.map(c => ({ label: c.nome, value: c.codigo }));
       })
       .catch(erro => this.errorHandler.handle(erro));
-  }
-
-  atualizarPessoa(form: FormControl) {
-    this.lancamentoService.atualizar(this.lancamento)
-    .then(() => {
-      this.toastyServiceMessage.success('Lançamento atualizado com sucesso!');
-
-      // form.reset();
-      this.lancamento = new Lancamento();
-    })
-    .catch(erro => this.errorHandler.handle(erro));
   }
 
 }
