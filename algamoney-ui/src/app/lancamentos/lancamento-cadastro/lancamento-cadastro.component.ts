@@ -68,4 +68,15 @@ export class LancamentoCadastroComponent implements OnInit  {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
+  atualizarPessoa(form: FormControl) {
+    this.lancamentoService.atualizar(this.lancamento)
+    .then(() => {
+      this.toastyServiceMessage.success('Lançamento atualizado com sucesso!');
+
+      // form.reset();
+      this.lancamento = new Lancamento();
+    })
+    .catch(erro => this.errorHandler.handle(erro));
+  }
+
 }
