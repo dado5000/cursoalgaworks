@@ -11,6 +11,7 @@ import { LancamentoService } from 'app/lancamentos/lancamento.service';
 import { PessoaService } from 'app/pessoas/pessoa.service';
 import { ConfirmationService } from 'primeng/components/common/api';
 import { RouterModule } from '@angular/router';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { RouterModule } from '@angular/router';
     ConfirmDialogModule,
   ],
   declarations: [
-    NavbarComponent
+    NavbarComponent,
+    PaginaNaoEncontradaComponent
   ],
   exports: [
     NavbarComponent,
