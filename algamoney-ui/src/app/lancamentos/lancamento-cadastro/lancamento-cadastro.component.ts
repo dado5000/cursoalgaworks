@@ -7,7 +7,7 @@ import { PessoaService } from 'app/pessoas/pessoa.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { LancamentoService } from './../lancamento.service';
 import { Lancamento } from './../../core/model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -41,7 +41,8 @@ export class LancamentoCadastroComponent implements OnInit  {
     private lancamentoService: LancamentoService,
     private toastyServiceMessage: ToastyService,
     private errorHandler: ErrorHandlerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   get editando() {
@@ -76,11 +77,11 @@ export class LancamentoCadastroComponent implements OnInit  {
 
   adicionarLancamento(form: FormControl) {
     this.lancamentoService.adicionar(this.lancamento)
-      .then(() => {
+      .then(lancamentoAdicionado  => {
         this.toastyServiceMessage.success('Lançamento adicionado com sucesso!');
 
-        form.reset();
-        this.lancamento = new Lancamento();
+        /* Direciona o usuário para a pagina de edição do lançamento que acabou de adicionar */
+        this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -99,6 +100,21 @@ export class LancamentoCadastroComponent implements OnInit  {
         this.pessoas = pessoas.map(c => ({ label: c.nome, value: c.codigo }));
       })
       .catch(erro => this.errorHandler.handle(erro));
+  }
+
+  novo(form: FormControl) {
+    /* Limpa o formulário */
+    form.reset();
+
+    /* Função JavaScript do 'setTimeout' que corrige a nova instancia do objeto
+    *  após a reset, o valor padrão não é atribuido
+    */
+    setTimeout(function() {
+      /* Instancia um novo objeto tipo Lancamento */
+      this.lancamento = new Lancamento();
+    }.bind(this), 1);
+
+    this.router.navigate(['/lancamentos/novo']);
   }
 
 }
