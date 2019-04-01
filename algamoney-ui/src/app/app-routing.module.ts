@@ -11,9 +11,6 @@ import { LancamentosPesquisaComponent } from './lancamentos/lancamentos-pesquisa
 const routes: Routes  = [
   { path: '', redirectTo: 'lancamentos', pathMatch: 'full' },
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
-  { path: 'lancamentos', component: LancamentosPesquisaComponent },
-  { path: 'lancamentos/novo', component: LancamentoCadastroComponent },
-  { path: 'lancamentos/:codigo', component: LancamentoCadastroComponent },
   { path: 'pessoas', component: PessoasPesquisaComponent },
   { path: 'pessoas/nova', component: PessoasCadastroComponent },
   /* Qualquer rota que não seja as acima, cai na rota '**' */
