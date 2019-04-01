@@ -8,6 +8,7 @@ import { CategoriaService } from './../../categorias/categoria.service';
 import { LancamentoService } from './../lancamento.service';
 import { Lancamento } from './../../core/model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -26,6 +27,11 @@ export class LancamentoCadastroComponent implements OnInit  {
   lancamento = new Lancamento();
 
   ngOnInit() {
+
+    /* Setando título da página dinamicamente */
+    this.title.setTitle('Lançamento - Novo');
+
+    /* Pegando valor do código do lançamento atraves de parametro pela rota */
     const codigoLancamento = this.route.snapshot.params['codigo'];
       if (codigoLancamento) {
         this.carregarLancamento(codigoLancamento);
@@ -42,17 +48,40 @@ export class LancamentoCadastroComponent implements OnInit  {
     private toastyServiceMessage: ToastyService,
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private title: Title
   ) {}
 
+  /* Métodos da CRUD  ****************************************************************************/
   get editando() {
     return Boolean(this.lancamento.codigo);
   }
 
+  novo(form: FormControl) {
+    /* Limpa o formulário */
+    form.reset();
+
+    /* Função JavaScript do 'setTimeout' que corrige a nova instancia do objeto
+    *  após a reset, o valor padrão não é atribuido
+    */
+    setTimeout(function() {
+      /* Instancia um novo objeto tipo Lancamento */
+      this.lancamento = new Lancamento();
+    }.bind(this), 1);
+
+    this.router.navigate(['/lancamentos/novo']);
+  }
+
+  atualizarTituloEdicao() {
+    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
+  }
+
+  /* Métodos de SERVIÇO  ****************************************************************************/
   carregarLancamento(codigo: number) {
     this.lancamentoService.buscarPorCodigo(codigo)
       .then(lancamento => {
           this.lancamento = lancamento;
+          this.atualizarTituloEdicao();
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -71,6 +100,8 @@ export class LancamentoCadastroComponent implements OnInit  {
         this.lancamento = lancamento;
 
         this.toastyServiceMessage.success('Lançamento Atualizado com sucesso!');
+
+        this.atualizarTituloEdicao();
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
@@ -102,19 +133,6 @@ export class LancamentoCadastroComponent implements OnInit  {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  novo(form: FormControl) {
-    /* Limpa o formulário */
-    form.reset();
 
-    /* Função JavaScript do 'setTimeout' que corrige a nova instancia do objeto
-    *  após a reset, o valor padrão não é atribuido
-    */
-    setTimeout(function() {
-      /* Instancia um novo objeto tipo Lancamento */
-      this.lancamento = new Lancamento();
-    }.bind(this), 1);
-
-    this.router.navigate(['/lancamentos/novo']);
-  }
 
 }
