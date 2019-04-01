@@ -10,6 +10,7 @@ import { InputTextModule } from 'primeng/components/inputtext/inputtext';
 
 import { PessoasCadastroComponent } from './pessoas-cadastro/pessoas-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
+import { PessoasRoutingModule } from './pessoas-routing.module';
 import { SharedModule } from './../shared/shared.module';
 
 
@@ -23,7 +24,9 @@ import { SharedModule } from './../shared/shared.module';
     TooltipModule,
     InputTextModule,
     ButtonModule,
-    SharedModule
+
+    SharedModule,
+    PessoasRoutingModule
   ],
   declarations: [
     PessoasCadastroComponent,

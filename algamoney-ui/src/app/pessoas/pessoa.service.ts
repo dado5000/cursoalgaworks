@@ -85,4 +85,34 @@ adicionar(pessoa: Pessoa): Promise<Pessoa> {
     .then(response => response.json());
 }
 
+// Serviço da API utilizando PUT do http
+atualizar(pessoa: Pessoa): Promise<Pessoa> {
+  const headers = new Headers();
+  headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+  headers.append('Content-Type', 'application/json');
+
+  return this.http.put(`${this.pessoaURL}/${pessoa.codigo}`,
+      JSON.stringify(pessoa), { headers })
+    .toPromise()
+    .then(response => {
+      const pessoaAtualizada = response.json() as Pessoa;
+
+      return pessoaAtualizada;
+    });
+}
+
+// Serviço fornecido pela API
+buscarPorCodigo(codigo: Number): Promise<Pessoa> {
+  const headers = new Headers();
+  headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+  return this.http.get(`${this.pessoaURL}/${codigo}`, { headers })
+    .toPromise()
+    .then(response => {
+      const pessoa = response.json() as Pessoa;
+
+      return pessoa
+    });
+}
+
 }
