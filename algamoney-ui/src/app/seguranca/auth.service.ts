@@ -28,12 +28,18 @@ export class AuthService {
     return this.http.post(this.oauthTokenUrl, body, { headers })
       .toPromise()
       .then(response => {
-        console.log(response);
         this.armazenarToken(response.json().access_token);
-        console.log(this.jwtPayload);
       })
-      .catch(Response => {
-        console.log(Response);
+      .catch(response => {
+        if (response.status === 400) {
+          const responseJason = response.json();
+
+          if (responseJason.error === 'invalid_grant') {
+            return Promise.reject('Usuário e/ou Senha invalido!')
+          }
+        }
+
+        return Promise.reject(response);
       })
   }
 
