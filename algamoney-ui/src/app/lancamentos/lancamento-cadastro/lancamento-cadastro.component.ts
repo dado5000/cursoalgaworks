@@ -69,7 +69,7 @@ export class LancamentoCadastroComponent implements OnInit  {
       this.lancamento = new Lancamento();
     }.bind(this), 1);
 
-    this.router.navigate(['pessoas/nova']);
+    this.router.navigate(['/lancamentos/novo']);
   }
 
   atualizarTituloEdicao() {

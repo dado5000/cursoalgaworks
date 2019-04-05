@@ -1,3 +1,4 @@
+import { AuthService } from './../seguranca/auth.service';
 
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -40,6 +41,7 @@ import { ToastyModule } from 'ng2-toasty';
     PessoaService,
     CategoriaService,
     ConfirmationService,
+    AuthService,
     Title,
     { provide: LOCALE_ID, useValue: 'pt-BR' }
   ]
