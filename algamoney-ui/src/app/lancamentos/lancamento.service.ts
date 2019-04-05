@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, URLSearchParams } from '@angular/http';
+import { URLSearchParams } from '@angular/http';
+
+import { AuthHttp } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 import * as moment from 'moment';
@@ -19,13 +21,13 @@ export class LancamentoService {
 
   lancamentosUrl = 'http://localhost:8080/lancamentos';
 
-  constructor(private http: Http) { }
+  constructor(private http: AuthHttp) { }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
-    const headers = new Headers();
     const params = new URLSearchParams();
 
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+    // const headers = new Headers(); USADO COM BASCI Security
+    // headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
         params.set('page', filtro.pagina.toString());
         params.set('size', filtro.itensPorPagina.toString());
@@ -42,7 +44,7 @@ export class LancamentoService {
             moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));
         }
 
-    return this.http.get(`${this.lancamentosUrl}?resumo`, { headers, search: params })
+    return this.http.get(`${this.lancamentosUrl}?resumo`, { search: params })
       .toPromise()
       .then(response => {
         const responseJason = response.json();
@@ -57,33 +59,25 @@ export class LancamentoService {
   }
 
   excluir(codigo: number): Promise<void> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.delete(`${this.lancamentosUrl}/${codigo}`, { headers })
+    return this.http.delete(`${this.lancamentosUrl}/${codigo}`)
     .toPromise()
     .then( () => null );
   }
 
   adicionar(lancamento: Lancamento): Promise<Lancamento> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
 
     return this.http.post(this.lancamentosUrl,
-        JSON.stringify(lancamento), { headers })
+        JSON.stringify(lancamento))
       .toPromise()
       .then(response => response.json());
   }
 
   // Serviço da API utilizando PUT do http
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
-    headers.append('Content-Type', 'application/json');
 
     return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`,
-        JSON.stringify(lancamento), { headers })
+        JSON.stringify(lancamento))
       .toPromise()
       .then(response => {
         const lancamentoAlterado = response.json() as Lancamento;
@@ -96,10 +90,8 @@ export class LancamentoService {
 
   // Serviço fornecido pela API
   buscarPorCodigo(codigo: Number): Promise<Lancamento> {
-    const headers = new Headers();
-    headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-    return this.http.get(`${this.lancamentosUrl}/${codigo}`, { headers })
+    return this.http.get(`${this.lancamentosUrl}/${codigo}`)
       .toPromise()
       .then(response => {
         const lancamento = response.json() as Lancamento;

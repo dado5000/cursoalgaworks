@@ -8,6 +8,19 @@ import { ButtonModule } from 'primeng/components/button/button';
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { LoginComponent } from './login/login.component';
 
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { RequestOptions, Http } from '@angular/http';
+
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  const config = new AuthConfig({
+    globalHeaders: [
+      { 'Content-Type': 'application/json' }
+    ]
+  });
+
+  return new AuthHttp(config, http, options);
+}
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,6 +31,15 @@ import { LoginComponent } from './login/login.component';
 
     SegurancaRoutingModule
   ],
-  declarations: [LoginComponent]
+  declarations: [
+    LoginComponent
+  ],
+  providers: [
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    }
+  ]
 })
 export class SegurancaModule { }
