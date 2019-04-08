@@ -14,13 +14,14 @@ export class ErrorHandlerService {
     if (typeof errorResponse === 'string') {
        msg = errorResponse;
 
-    } else if ( errorResponse.status === 403 ) {
-      msg = 'Acesso negado.'
-
     } else if (errorResponse instanceof Response
         && errorResponse.status >= 400 && errorResponse.status <= 499) {
         let errors;
         msg = 'Ocorreu um erro ao processar a sua solicitação';
+
+        if ( errorResponse.status === 403 ) {
+          msg = 'Usuário sem permissão.'
+        }
 
         try {
             errors = errorResponse.json();
