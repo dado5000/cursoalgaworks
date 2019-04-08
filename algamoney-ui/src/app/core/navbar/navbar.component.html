@@ -11,7 +11,7 @@
   </div>
   <!-- [hidden] propriedade que exibe ou não o menu de acordo com o valor da variável booleana -->
   <ul class="navbar-menu" [hidden]="!exibindoMenu">
-    <li class="navbar-usuario">ADMINISTRADOR</li>
+    <li class="navbar-usuario">{{ auth.jwtPayload?.nome }}</li>
     <li class="navbar-menuitem" routerLinkActive="ativo"><a routerLink="/lancamentos">Lançamentos</a></li>
     <li class="navbar-menuitem" routerLinkActive="ativo"><a routerLink="/pessoas">Pessoas</a></li>
     <li class="navbar-menuitem" routerLinkActive="ativo"><a routerLink="#">logout</a></li>
