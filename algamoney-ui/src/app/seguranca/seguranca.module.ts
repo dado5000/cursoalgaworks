@@ -13,6 +13,7 @@ import { AuthHttp, AuthConfig } from 'angular2-jwt';
 import { RequestOptions, Http } from '@angular/http';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
+import { LogoutService } from './logout.service';
 
 export function authHttpServiceFactory(auth: AuthService, http: Http, options: RequestOptions) {
   const config = new AuthConfig({
@@ -43,7 +44,8 @@ export function authHttpServiceFactory(auth: AuthService, http: Http, options: R
       useFactory: authHttpServiceFactory,
       deps: [AuthService, Http, RequestOptions]
     },
-    AuthGuard
+    AuthGuard,
+    LogoutService
   ]
 })
 export class SegurancaModule { }
