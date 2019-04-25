@@ -2,11 +2,11 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { ButtonModule } from 'primeng/components/button/button';
-import { TooltipModule } from 'primeng/components/tooltip/tooltip';
-import { InputMaskModule } from 'primeng/components/inputmask/inputmask';
-import { DataTableModule } from 'primeng/components/datatable/datatable';
-import { InputTextModule } from 'primeng/components/inputtext/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { InputMaskModule } from 'primeng/inputmask';
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { PessoasCadastroComponent } from './pessoas-cadastro/pessoas-cadastro.component';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
@@ -20,7 +20,7 @@ import { SharedModule } from './../shared/shared.module';
     FormsModule,
 
     InputMaskModule,
-    DataTableModule,
+    TableModule,
     TooltipModule,
     InputTextModule,
     ButtonModule,

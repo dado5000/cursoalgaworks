@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RequestOptions, Http } from '@angular/http';
 
-import { InputTextModule } from 'primeng/components/inputtext/inputtext';
-import { ButtonModule } from 'primeng/components/button/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { MoneyHttp } from './money-http';
 import { LoginComponent } from './login/login.component';
 
 import { AuthHttp, AuthConfig } from 'angular2-jwt';
-import { RequestOptions, Http } from '@angular/http';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { LogoutService } from './logout.service';
