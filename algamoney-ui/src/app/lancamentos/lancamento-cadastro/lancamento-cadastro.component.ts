@@ -1,5 +1,5 @@
 import { ToastyService } from 'ng2-toasty';
-import { FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 import { ErrorHandlerService } from 'app/core/error-handler.service';
@@ -24,9 +24,12 @@ export class LancamentoCadastroComponent implements OnInit  {
 
   categorias = [];
   pessoas = [];
-  lancamento = new Lancamento();
+  // lancamento = new Lancamento();
+  formulario: FormGroup;
 
   ngOnInit() {
+    /* Contrução do formulário reativo */
+    this.configurarFormulario();
 
     /* Setando título da página dinamicamente */
     this.title.setTitle('Lançamento - Novo');
@@ -49,17 +52,18 @@ export class LancamentoCadastroComponent implements OnInit  {
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
     private router: Router,
-    private title: Title
+    private title: Title,
+    private formBuilder: FormBuilder
   ) {}
 
   /* Métodos da CRUD  ****************************************************************************/
   get editando() {
-    return Boolean(this.lancamento.codigo);
+    return Boolean(this.formulario.get('codigo').value);
   }
 
-  novo(form: FormControl) {
+  novo() {
     /* Limpa o formulário */
-    form.reset();
+    this.formulario.reset();
 
     /* Função JavaScript do 'setTimeout' que corrige a nova instancia do objeto
     *  após a reset, o valor padrão não é atribuido
@@ -73,31 +77,53 @@ export class LancamentoCadastroComponent implements OnInit  {
   }
 
   atualizarTituloEdicao() {
-    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
+    this.title.setTitle(`Edição de lançamento: ${this.formulario.get('descricao').value}`);
+  }
+
+  configurarFormulario() {
+    this.formulario = this.formBuilder.group({
+      codigo: [],
+      tipo: [ 'RECEITA', Validators.required ],
+      dataVencimento: [ null, Validators.required ],
+      dataPagamento: [],
+      descricao: [null, [ Validators.required, Validators.minLength(5) ]],
+      valor: [ null, Validators.required ],
+      pessoa: this.formBuilder.group({
+        codigo: [ null, Validators.required ],
+        nome: []
+      }),
+      categoria: this.formBuilder.group({
+        codigo: [ null, Validators.required ],
+        nome: []
+      }),
+      observacao: []
+    });
   }
 
   /* Métodos de SERVIÇO  ****************************************************************************/
   carregarLancamento(codigo: number) {
     this.lancamentoService.buscarPorCodigo(codigo)
       .then(lancamento => {
-          this.lancamento = lancamento;
+          this.formulario.patchValue(lancamento);
           this.atualizarTituloEdicao();
       })
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  salvar(form: FormControl) {
+  salvar() {
     if (this.editando) {
-      this.atualizarLancamento(form);
+      this.atualizarLancamento();
     } else {
-      this.adicionarLancamento(form);
+      this.adicionarLancamento();
     }
   }
 
-  atualizarLancamento(form: FormControl) {
-    this.lancamentoService.atualizar(this.lancamento)
+  atualizarLancamento() {
+    this.lancamentoService.atualizar(this.formulario.value)
       .then(lancamento => {
-        this.lancamento = lancamento;
+        /* patchValue faz com que só as propriedades que estão sendo manipulado no momento sejam enviadas e não
+        *  todas as propriedades do objeto */
+        this.formulario.patchValue(lancamento);
 
         this.toastyServiceMessage.success('Lançamento Atualizado com sucesso!');
 
@@ -106,8 +132,8 @@ export class LancamentoCadastroComponent implements OnInit  {
       .catch(erro => this.errorHandler.handle(erro));
   }
 
-  adicionarLancamento(form: FormControl) {
-    this.lancamentoService.adicionar(this.lancamento)
+  adicionarLancamento() {
+    this.lancamentoService.adicionar(this.formulario.value)
       .then(lancamentoAdicionado  => {
         this.toastyServiceMessage.success('Lançamento adicionado com sucesso!');
 
