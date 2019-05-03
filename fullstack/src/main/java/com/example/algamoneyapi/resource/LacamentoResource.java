@@ -1,5 +1,6 @@
 package com.example.algamoneyapi.resource;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.algamoneyapi.dto.LancamentoEstatisticaCategoria;
+import com.example.algamoneyapi.dto.LancamentoEstatisticaDia;
 import com.example.algamoneyapi.event.RecursoCriadoEvent;
 import com.example.algamoneyapi.exceptionhandler.AlgamoneyExceptionHandler.Erro;
 import com.example.algamoneyapi.model.Lancamento;
@@ -51,7 +54,17 @@ public class LacamentoResource {
 	@Autowired
 	private MessageSource messageSource;
 	
+	@GetMapping("/estatisticas/por-categoria")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public List<LancamentoEstatisticaCategoria> porCategoria() {
+		return this.lancamentoRepository.porCategoria(LocalDate.now().withYear(2018).withMonth(01));
+	}
 	
+	@GetMapping("/estatisticas/por-dia")
+	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
+	public List<LancamentoEstatisticaDia> porDia() {
+		return this.lancamentoRepository.porDia(LocalDate.now().withYear(2018).withMonth(01));
+	}/* parametro data fixo LocalDate.now().withYear(2018).withMonth(01) Janeiro/2018 */
 	
 	@GetMapping
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
@@ -107,4 +120,4 @@ public class LacamentoResource {
 	}
 	
 
-}/* Aula 5.7  / 7.1 */
+}/* Aula 5.7  / 7.1 / 22.3 / 22.5 */
