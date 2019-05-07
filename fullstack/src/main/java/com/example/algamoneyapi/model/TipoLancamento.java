@@ -2,8 +2,18 @@ package com.example.algamoneyapi.model;
 
 public enum TipoLancamento {
 	
-	RECEITA,
-	DESPESA
+	RECEITA("Receita"),
+	DESPESA("Despesa");
+	
+	private final String descricao;
+	
+	TipoLancamento(String descricao){
+		this.descricao = descricao;
+	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
 
 }
-/* Aula 5.1 */
+/* Aula 5.1 / 22.8 */
