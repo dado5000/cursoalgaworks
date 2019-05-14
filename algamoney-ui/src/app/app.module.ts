@@ -13,6 +13,7 @@ import { SegurancaModule } from './seguranca/seguranca.module';
 @NgModule({
   declarations: [
     AppComponent
+
   ],
   imports: [
     BrowserModule,
