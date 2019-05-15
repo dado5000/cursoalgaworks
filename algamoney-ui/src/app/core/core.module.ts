@@ -14,14 +14,14 @@ import { ErrorHandlerService } from './error-handler.service';
 import { LancamentoService } from 'app/lancamentos/lancamento.service';
 import { PessoaService } from 'app/pessoas/pessoa.service';
 import { AuthService } from './../seguranca/auth.service';
+import { NaoAutorizadoComponent } from './nao-autorizado.component';
+import { DashboardService } from 'app/dashboard/dashboard.service';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 
 import { ToastyModule } from 'ng2-toasty';
 import { JwtHelper } from 'angular2-jwt';
-import { NaoAutorizadoComponent } from './nao-autorizado.component';
-
 
 
 @NgModule({
@@ -47,6 +47,7 @@ import { NaoAutorizadoComponent } from './nao-autorizado.component';
     LancamentoService,
     PessoaService,
     CategoriaService,
+    DashboardService,
 
     ConfirmationService,
     JwtHelper,
