@@ -16,6 +16,7 @@ import { PessoaService } from 'app/pessoas/pessoa.service';
 import { AuthService } from './../seguranca/auth.service';
 import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { DashboardService } from 'app/dashboard/dashboard.service';
+import { RelatoriosService } from 'app/relatorios/relatorios.service';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
@@ -48,6 +49,7 @@ import { JwtHelper } from 'angular2-jwt';
     PessoaService,
     CategoriaService,
     DashboardService,
+    RelatoriosService,
 
     ConfirmationService,
     JwtHelper,
