@@ -21,6 +21,10 @@
       <div class="ui-g-12">
         <button pButton type="submit" label="Gerar"
           [disabled]="f.invalid"></button>
+
+          <p-progressSpinner *ngIf="carregando"
+           [style]="{ width:'25px', height: '25px' }"></p-progressSpinner>
+
       </div>
     </form>
   </div>
