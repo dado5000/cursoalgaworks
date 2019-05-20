@@ -1,5 +1,8 @@
 package com.example.algamoneyapi.resource;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.algamoneyapi.dto.LancamentoEstatisticaCategoria;
 import com.example.algamoneyapi.dto.LancamentoEstatisticaDia;
@@ -58,6 +62,16 @@ public class LacamentoResource {
 	@Autowired
 	private MessageSource messageSource;
 	
+	@PostMapping("/anexo")
+	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_LANCAMENTO') and #oauth2.hasScope('write')")
+	public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+		OutputStream out = new FileOutputStream(
+				"/anexo--" + anexo.getOriginalFilename());
+		out.write(anexo.getBytes());
+		out.close();
+		return "ok";
+	}
+	
 	@GetMapping("/relatorios/por-pessoa")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public ResponseEntity<byte[]> relatorioPorPessoa(
@@ -73,13 +87,13 @@ public class LacamentoResource {
 	@GetMapping("/estatisticas/por-categoria")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public List<LancamentoEstatisticaCategoria> porCategoria() {
-		return this.lancamentoRepository.porCategoria(LocalDate.now().withYear(2018).withMonth(01));
+		return this.lancamentoRepository.porCategoria(LocalDate.now().withYear(2018).withMonth(04));
 	}
 	
 	@GetMapping("/estatisticas/por-dia")
 	@PreAuthorize("hasAuthority('ROLE_PESQUISAR_LANCAMENTO') and #oauth2.hasScope('read')")
 	public List<LancamentoEstatisticaDia> porDia() {
-		return this.lancamentoRepository.porDia(LocalDate.now().withYear(2018).withMonth(01));
+		return this.lancamentoRepository.porDia(LocalDate.now().withYear(2018).withMonth(03));
 	}/* parametro data fixo LocalDate.now().withYear(2018).withMonth(01) Janeiro/2018 */
 	
 	@GetMapping
