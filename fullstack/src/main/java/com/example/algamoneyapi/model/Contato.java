@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+
+@SuppressWarnings("deprecation")
 @Entity
 @Table(name = "contato")
 public class Contato {
@@ -19,7 +21,7 @@ public class Contato {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-	
+		
 	@NotEmpty
 	private String nome;
 	
