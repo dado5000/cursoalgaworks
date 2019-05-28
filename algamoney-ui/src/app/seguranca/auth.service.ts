@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { JwtHelper } from 'angular2-jwt';
 
-import 'rxjs/add/operator/toPromise';
+
 import { environment } from 'environments/environment';
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { AuthHttp } from 'angular2-jwt';
-import 'rxjs/operator/toPromise';
+
 import * as moment from 'moment';
 
 import { environment } from './../../environments/environment';

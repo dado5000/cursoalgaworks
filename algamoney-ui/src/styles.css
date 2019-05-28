@@ -5,6 +5,10 @@ body {
   color: #404C51;
 }
 
+a, button {
+  margin-right: 0.25em;
+}
+
 label {
   font-weight: bold;
 }

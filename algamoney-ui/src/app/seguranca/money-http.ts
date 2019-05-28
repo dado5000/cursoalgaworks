@@ -1,8 +1,9 @@
+
+import {from as observableFrom,  Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Http, RequestOptions, RequestOptionsArgs, Response } from '@angular/http';
 
 import { AuthConfig, AuthHttp, JwtHelper } from 'angular2-jwt';
-import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
 
@@ -61,7 +62,7 @@ export class MoneyHttp extends AuthHttp {
           return fn().toPromise();
         });
 
-      return Observable.fromPromise(chamadaNovoAccessToken);
+      return observableFrom(chamadaNovoAccessToken);
     } else {
       return fn();
     }

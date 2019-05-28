@@ -2,7 +2,7 @@ import { AuthHttp } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
+
 
 import { Pessoa, Estado, Cidade } from 'app/core/model';
 import { environment } from 'environments/environment';

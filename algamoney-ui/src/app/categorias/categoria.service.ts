@@ -1,7 +1,7 @@
 import { AuthHttp } from 'angular2-jwt';
 import { Injectable } from '@angular/core';
 
-import 'rxjs/add/operator/toPromise';
+
 import { environment } from 'environments/environment';
 
 @Injectable()

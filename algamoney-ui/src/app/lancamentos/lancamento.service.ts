@@ -3,7 +3,7 @@ import { URLSearchParams } from '@angular/http';
 
 import { AuthHttp } from 'angular2-jwt';
 
-import 'rxjs/add/operator/toPromise';
+
 import * as moment from 'moment';
 
 import { Lancamento } from 'app/core/model';
