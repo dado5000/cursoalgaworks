@@ -1,8 +1,6 @@
+import { MoneyHttp } from 'app/seguranca/money-http';
 import { Injectable } from '@angular/core';
-import { URLSearchParams } from '@angular/http';
-
-import { AuthHttp } from 'angular2-jwt';
-
+import { HttpParams } from '@angular/common/http';
 
 import * as moment from 'moment';
 
@@ -22,40 +20,41 @@ export class LancamentoService {
 
   lancamentosUrl: string;
 
-  constructor(private http: AuthHttp) {
+  constructor(private http: MoneyHttp) {
     this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
    }
 
   pesquisar(filtro: LancamentoFiltro): Promise<any> {
-    const params = new URLSearchParams();
+    let params = new HttpParams({
+      fromObject: {
+        page: filtro.pagina.toString(),
+        size: filtro.itensPorPagina.toString()
+      }
+    });
 
     // const headers = new Headers(); USADO COM BASCI Security
     // headers.append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-        params.set('page', filtro.pagina.toString());
-        params.set('size', filtro.itensPorPagina.toString());
-
         if (filtro.descricao) {
-          params.set('descricao', filtro.descricao);
+          params = params.append('descricao', filtro.descricao);
         }
         if (filtro.dataVencimentoInicio) {
-          params.set('dataVencimentoDe',
+          params = params.append('dataVencimentoDe',
             moment(filtro.dataVencimentoInicio).format('YYYY-MM-DD'));
         }
         if (filtro.dataVencimentoFim) {
-          params.set('dataVencimentoAte',
+          params = params.append('dataVencimentoAte',
             moment(filtro.dataVencimentoFim).format('YYYY-MM-DD'));
         }
 
-    return this.http.get(`${this.lancamentosUrl}?resumo`, { search: params })
+    return this.http.get<any>(`${this.lancamentosUrl}?resumo`, { params })
       .toPromise()
       .then(response => {
-        const responseJason = response.json();
-        const lancamentos = responseJason.content;
+        const lancamentos = response.content;
 
         const resultado = {
           lancamentos,
-          total: responseJason.totalElements
+          total: response.totalElements
         };
         return resultado;
       })
@@ -69,21 +68,17 @@ export class LancamentoService {
   }
 
   adicionar(lancamento: Lancamento): Promise<Lancamento> {
-
-    return this.http.post(this.lancamentosUrl,
-        JSON.stringify(lancamento))
-      .toPromise()
-      .then(response => response.json());
+    return this.http.post<Lancamento>(this.lancamentosUrl, lancamento)
+      .toPromise();
   }
 
   // Serviço da API utilizando PUT do http
   atualizar(lancamento: Lancamento): Promise<Lancamento> {
 
-    return this.http.put(`${this.lancamentosUrl}/${lancamento.codigo}`,
-        JSON.stringify(lancamento))
+    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento)
       .toPromise()
       .then(response => {
-        const lancamentoAlterado = response.json() as Lancamento;
+        const lancamentoAlterado = response;
 
         this.converterStringsParaDatas([lancamentoAlterado]);
 
@@ -94,10 +89,10 @@ export class LancamentoService {
   // Serviço fornecido pela API
   buscarPorCodigo(codigo: Number): Promise<Lancamento> {
 
-    return this.http.get(`${this.lancamentosUrl}/${codigo}`)
+    return this.http.get<Lancamento>(`${this.lancamentosUrl}/${codigo}`)
       .toPromise()
       .then(response => {
-        const lancamento = response.json() as Lancamento;
+        const lancamento = response;
 
         this.converterStringsParaDatas([lancamento]);
 

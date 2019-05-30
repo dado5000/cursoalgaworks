@@ -3,14 +3,14 @@
 
 
 
-<!-- Componente de mensagem toasty angular -->
-<ng2-toasty></ng2-toasty>
+<!-- Componente de mensagem Growl do primeNG -->
+<p-growl></p-growl>
 <!-- Componente de confirmação de ação do PrimeNG -->
 <p-confirmDialog header="Confirmação" icon="fa fa-question-circle" #confirmacao>
   <p-footer>
-    <button type="button" pButton icon="fa-check" label="Sim"
+    <button type="button" pButton icon="fa fa-check" label="Sim"
       (click)="confirmacao.accept()"></button>
-    <button type="button" pButton icon="fa-times" label="Não"
+    <button type="button" pButton icon="fa fa-times" label="Não"
       (click)="confirmacao.reject()"></button>
   </p-footer>
 </p-confirmDialog>

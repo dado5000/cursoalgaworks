@@ -10,19 +10,14 @@ import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { MoneyHttp } from './money-http';
 import { LoginComponent } from './login/login.component';
 
-import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { JwtModule } from '@auth0/angular-jwt';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { LogoutService } from './logout.service';
+import { environment } from 'environments/environment';
 
-export function authHttpServiceFactory(auth: AuthService, http: Http, options: RequestOptions) {
-  const config = new AuthConfig({
-    globalHeaders: [
-      { 'Content-Type': 'application/json' }
-    ]
-  });
-
-  return new MoneyHttp(auth, config, http, options);
+export function tokenGetter() {
+  return localStorage.getItem('token');
 }
 
 @NgModule({
@@ -30,6 +25,13 @@ export function authHttpServiceFactory(auth: AuthService, http: Http, options: R
     CommonModule,
     FormsModule,
 
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        whitelistedDomains: environment.tokenWhiteListedDomains,
+        blacklistedRoutes: environment.tokenBlackListedRoutes
+      }
+    }),
     InputTextModule,
     ButtonModule,
 
@@ -39,11 +41,6 @@ export function authHttpServiceFactory(auth: AuthService, http: Http, options: R
     LoginComponent
   ],
   providers: [
-    {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [AuthService, Http, RequestOptions]
-    },
     AuthGuard,
     LogoutService
   ]

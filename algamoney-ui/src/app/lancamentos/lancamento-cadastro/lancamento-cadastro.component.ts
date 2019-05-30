@@ -1,4 +1,5 @@
-import { ToastyService } from 'ng2-toasty';
+import { MessageService } from 'primeng/components/common/messageservice';
+
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
@@ -48,7 +49,7 @@ export class LancamentoCadastroComponent implements OnInit  {
     private categoriaService: CategoriaService,
     private pessoaService: PessoaService,
     private lancamentoService: LancamentoService,
-    private toastyServiceMessage: ToastyService,
+    private messageService: MessageService,
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
     private router: Router,
@@ -135,7 +136,7 @@ export class LancamentoCadastroComponent implements OnInit  {
         *  todas as propriedades do objeto */
         this.formulario.patchValue(lancamento);
 
-        this.toastyServiceMessage.success('Lançamento Atualizado com sucesso!');
+        this.messageService.add({ severity: 'success', detail: 'Lançamento Atualizado com sucesso' });
 
         this.atualizarTituloEdicao();
       })
@@ -145,7 +146,7 @@ export class LancamentoCadastroComponent implements OnInit  {
   adicionarLancamento() {
     this.lancamentoService.adicionar(this.formulario.value)
       .then(lancamentoAdicionado  => {
-        this.toastyServiceMessage.success('Lançamento adicionado com sucesso!');
+        this.messageService.add({ severity: 'success', detail: 'Lançamento adicionado com sucesso!'});
 
         /* Direciona o usuário para a pagina de edição do lançamento que acabou de adicionar */
         this.router.navigate(['/lancamentos', lancamentoAdicionado.codigo]);

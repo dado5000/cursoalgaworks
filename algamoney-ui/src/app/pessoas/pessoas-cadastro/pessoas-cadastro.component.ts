@@ -7,7 +7,7 @@ import { Pessoa } from 'app/core/model';
 import { PessoaService } from './../pessoa.service';
 import { ErrorHandlerService } from 'app/core/error-handler.service';
 
-import { ToastyService } from 'ng2-toasty';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-pessoas-cadastro',
@@ -23,7 +23,7 @@ export class PessoasCadastroComponent implements OnInit {
 
   constructor(
     private pessoaService: PessoaService,
-    private toastyServiceMessage: ToastyService,
+    private messageService: MessageService,
     private errorHandler: ErrorHandlerService,
     private route: ActivatedRoute,
     private router: Router,
@@ -93,7 +93,7 @@ export class PessoasCadastroComponent implements OnInit {
   novaPessoa(form: FormControl) {
     this.pessoaService.adicionar(this.pessoa)
       .then(pessoaAdicionada  => {
-        this.toastyServiceMessage.success(`${this.pessoa.nome} cadastrado(a) com sucesso!`);
+        this.messageService.add(({ severity: 'success', detail: `${this.pessoa.nome} cadastrado(a) com sucesso!`}));
 
         /* Direciona o usuário para a pagina de edição do lançamento que acabou de adicionar */
         this.router.navigate(['/pessoas', pessoaAdicionada.codigo]);
@@ -123,7 +123,7 @@ export class PessoasCadastroComponent implements OnInit {
       .then(pessoa => {
         this.pessoa = pessoa;
 
-        this.toastyServiceMessage.success('Pessoa atualizada com sucesso!');
+        this.messageService.add({ severity: 'success', detail: 'Pessoa atualizada com sucesso!'});
 
         this.atualizarTituloEdicao();
       })

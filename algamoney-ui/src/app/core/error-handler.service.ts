@@ -1,7 +1,7 @@
-import { Response } from '@angular/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { ToastyService } from 'ng2-toasty';
+import { MessageService } from 'primeng/components/common/messageservice';
 import { NotAuthenticatedError } from 'app/seguranca/money-http';
 import { Router } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class ErrorHandlerService {
 
   constructor(
-    private toasty: ToastyService,
+    private messageSerice: MessageService,
     private router: Router
     ) { }
 
@@ -23,9 +23,8 @@ export class ErrorHandlerService {
       msg = 'Sessão expirada. Faça login novamente.'
       this.router.navigate(['/login']);
 
-    } else if (errorResponse instanceof Response
+    } else if (errorResponse instanceof HttpErrorResponse
         && errorResponse.status >= 400 && errorResponse.status <= 499) {
-        let errors;
         msg = 'Ocorreu um erro ao processar a sua solicitação';
 
         if ( errorResponse.status === 403 ) {
@@ -33,9 +32,7 @@ export class ErrorHandlerService {
         }
 
         try {
-            errors = errorResponse.json();
-
-            msg = errors[0].mensagemUsuario;
+            msg = errorResponse.error[0].mensagemUsuario;
         } catch (e) { }
 
       console.error('Ocorreu um erro', errorResponse);
@@ -45,7 +42,7 @@ export class ErrorHandlerService {
       console.log('Ocorreu um erro.', errorResponse);
     }
 
-    this.toasty.error(msg);
+    this.messageSerice.add({severity: 'error', detail: msg});
   }
 
 }

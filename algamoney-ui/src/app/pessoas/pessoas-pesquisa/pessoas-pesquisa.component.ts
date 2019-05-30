@@ -5,7 +5,7 @@ import { Component, OnInit  } from '@angular/core';
 
 import { LazyLoadEvent, ConfirmationService } from 'primeng/components/common/api';
 import { ErrorHandlerService } from 'app/core/error-handler.service';
-import { ToastyService } from 'ng2-toasty';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -23,7 +23,7 @@ export class PessoasPesquisaComponent implements OnInit  {
       private pessoaService: PessoaService,
       private confirmation: ConfirmationService,
       private errorHandler: ErrorHandlerService,
-      private toastyServiceMessage: ToastyService,
+      private messageService: MessageService,
       private title: Title
       ) {}
 
@@ -63,7 +63,7 @@ export class PessoasPesquisaComponent implements OnInit  {
       this.pesquisar(this.filtro.pagina);
 
       // Componente que fornece o recurso de mensagens ao usuário
-      this.toastyServiceMessage.success('Pessoa excluida com sucesso!');
+      this.messageService.add({ severity: 'success', detail: 'Pessoa excluida com sucesso!'});
     })
     .catch(erro => this.errorHandler.handle(erro));
   }
@@ -89,7 +89,7 @@ export class PessoasPesquisaComponent implements OnInit  {
         } */
        const acao = novoStatus ? 'ativada' : 'desativada';
        pessoa.ativo = novoStatus;
-       this.toastyServiceMessage.success(`Pessoa ${acao} com sucesso!`);
+       this.messageService.add({ severity: 'success', detail: `Pessoa ${acao} com sucesso!`});
       } )
   }
 

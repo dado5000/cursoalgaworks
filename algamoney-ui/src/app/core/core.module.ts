@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -20,17 +21,20 @@ import { RelatoriosService } from 'app/relatorios/relatorios.service';
 
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { MessageService } from 'primeng/components/common/messageservice';
+import { GrowlModule } from 'primeng/growl';
 
-import { ToastyModule } from 'ng2-toasty';
-import { JwtHelper } from 'angular2-jwt';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { MoneyHttp } from 'app/seguranca/money-http';
 
 
 @NgModule({
   imports: [
     CommonModule,
+    HttpClientModule,
     RouterModule,
 
-    ToastyModule.forRoot(),
+    GrowlModule,
     ConfirmDialogModule,
   ],
   declarations: [
@@ -40,7 +44,7 @@ import { JwtHelper } from 'angular2-jwt';
   ],
   exports: [
     NavbarComponent,
-    ToastyModule,
+    GrowlModule,
     ConfirmDialogModule
   ],
   providers: [
@@ -50,9 +54,11 @@ import { JwtHelper } from 'angular2-jwt';
     CategoriaService,
     DashboardService,
     RelatoriosService,
+    MoneyHttp,
 
     ConfirmationService,
-    JwtHelper,
+    MessageService,
+    JwtHelperService,
     AuthService,
     Title,
     { provide: LOCALE_ID, useValue: 'pt' }

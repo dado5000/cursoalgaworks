@@ -1,6 +1,5 @@
-import { AuthHttp } from 'angular2-jwt';
+import { MoneyHttp } from './../seguranca/money-http';
 import { Injectable } from '@angular/core';
-
 
 import { environment } from 'environments/environment';
 
@@ -9,15 +8,14 @@ export class CategoriaService {
 
   categoriasURL: string;
 
-  constructor(private http: AuthHttp) {
+  constructor(private http: MoneyHttp) {
     this.categoriasURL = `${environment.apiUrl}/categorias`;
    }
 
   listarTodas(): Promise<any> {
 
     return this.http.get(this.categoriasURL)
-    .toPromise()
-    .then(response => response.json());
+    .toPromise();
   }
 
 }
